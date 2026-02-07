@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Frame</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body{
+      font-family: sans-serif;
+      background:#f2f4ff;
+      text-align:center;
+      padding:20px;
+    }
+    .box{
+      max-width:360px;
+      margin:auto;
+    }
+    .frame{
+      position:relative;
+      width:100%;
+      aspect-ratio:1/1;
+      background:url('frame.png') no-repeat center/cover;
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .frame img{
+      position:absolute;
+      top:22%;
+      left:22%;
+      width:56%;
+      height:56%;
+      object-fit:cover;
+      border-radius:8px;
+    }
+    input,button{
+      width:100%;
+      margin-top:12px;
+      padding:10px;
+      font-size:16px;
+    }
+    button{
+      background:#4f46e5;
+      color:white;
+      border:none;
+      border-radius:8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Frame এ ছবি যোগ করুন</h2>
+
+<div class="box">
+  <div class="frame" id="capture">
+    <img id="photo">
+  </div>
+
+  <input type="file" accept="image/*" onchange="addPhoto(event)">
+  <button onclick="download()">Download</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script>
+function addPhoto(e){
+  document.getElementById('photo').src =
+  URL.createObjectURL(e.target.files[0]);
+}
+
+function download(){
+  html2canvas(document.getElementById('capture')).then(canvas=>{
+    let a=document.createElement('a');
+    a.download='photo.png';
+    a.href=canvas.toDataURL();
+    a.click();
+  });
+}
+</script>
+
+</body>
+</html>
